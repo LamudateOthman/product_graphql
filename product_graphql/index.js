@@ -105,11 +105,11 @@ input ProductInput {
 }
 
 input VariantInput {
-  id: ID!
+   id: ID
   name: String!
   description: String!
   value: String!
-  values: [VariantValue!]!
+  values: [VariantValueInput!]!
 }
 
 input VariantValueInput {
