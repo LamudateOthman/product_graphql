@@ -320,9 +320,20 @@ const resolvers = {
 };
 
 // Creating Apollo Server
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    // Ensure you have a cache strategy to prevent memory exhaustion
+    cache: 'bounded', // Use a bounded cache
+    persistedQueries: {
+        cache: new MyBoundedCacheImplementation(), // Replace with your cache implementation
+    },
+    // Other configurations...
+});
+
 
 // Starting the server
-server.listen({ port: 4003 }).then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
+const PORT = process.env.PORT || 4003; // Fallback to 4003 if the PORT variable isn't set
+server.listen(PORT, () => {
+    console.log(`🚀 Server ready at http://localhost:${PORT}/`);
 });
