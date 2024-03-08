@@ -14,6 +14,7 @@ type Mutation {
   
   addProduct(input: AddProductInput!): Product
   AddProducte(name: String!,storeId: String!,description: String!, category: String!, price: Float!,image:String, variants: [VariantInput!]!): Product
+  updateProduct(product: ProductInput!): Product
 }
 
 type Product {
@@ -86,6 +87,14 @@ type VariantValue {
 }
 
 input AddProductInput {
+  name: String!
+  description: String!
+  category: String!
+  subcategories: String!
+  price: Float!
+  variants: [VariantInput!]!
+}
+input ProductInput {
   name: String!
   description: String!
   category: String!
@@ -266,7 +275,17 @@ const resolvers = {
       products.push(newProduct);
       return newProduct;
     },
-
+ updateProduct: async (_, { product }) => {
+      const { id, ...updateData } = product;
+      try {
+        // Update the product in the database
+        const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true });
+        return updatedProduct;
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to update product');
+      }
+    },
     AddProducte: async (_, { name, storeId, description, category, price, variants, image }) => {
       // Generate a new product ID
       const newProductId = products.reduce((maxId, product) => Math.max(maxId, parseInt(product.id)), 0) + 1;
