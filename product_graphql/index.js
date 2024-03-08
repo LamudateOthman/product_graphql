@@ -12,7 +12,7 @@ type Query {
 
 type Mutation {
   
-  addProduct(input: AddProductInput!): Product
+  addProduct(input: ProductInput!): Product
   AddProducte(name: String!,storeId: String!,description: String!, category: String!, price: Float!,image:String, variants: [VariantInput!]!): Product
   updateProduct(product: ProductInput!): Product
 }
@@ -99,19 +99,21 @@ input ProductInput {
   name: String!
   description: String!
   category: String!
-  subcategories: String!
   price: Float!
+  image: String
   variants: [VariantInput!]!
 }
 
 input VariantInput {
+  id: ID!
   name: String!
   description: String!
   value: String!
-  values: [VariantValueInput!]!
+  values: [VariantValue!]!
 }
 
 input VariantValueInput {
+  id: ID!
   value: String!
   price: Float!
   name: String!
