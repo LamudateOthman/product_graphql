@@ -1,7 +1,6 @@
 import { ApolloServer, gql   } from 'apollo-server';
 
  
-// Schema definition
 const typeDefs = gql`
 type Query {
   getProduct(id: ID!): Product
