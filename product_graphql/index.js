@@ -77,6 +77,30 @@ query GetProductsByStoreId(\$storeId:  String!, \$offset: Int!, \$limit: Int!) {
     }
   }
 }
+ UpdateProduct(\$product: ProductInput!) {
+      updateProduct(product: \$product) {
+        id
+        name
+        storeId
+        description
+        category
+        price
+        image
+        variants {
+          id
+          name
+          description
+          value
+          values {
+            id
+            value
+            price
+            name
+            stock
+            image
+          }
+        }
+    }
 type VariantValue {
   id: ID!
   value: String!
