@@ -278,16 +278,15 @@ const resolvers = {
       products.push(newProduct);
       return newProduct;
     },
- updateProduct: async (_, { product }) => {
-      const { id, ...updateData } = product;
-      try {
-        // Update the product in the database
-        const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true });
-        return updatedProduct;
-      } catch (error) {
-        console.error(error);
-        throw new Error('Failed to update product');
-      }
+  updateProduct: (_, { product }) => {
+        const productIndex = products.findIndex(p => p.id === product.id);
+        if (productIndex === -1) {
+            throw new Error('Product not found');
+        }
+
+        // Merge the existing product info with the updated info
+        products[productIndex] = { ...products[productIndex], ...product };
+        return products[productIndex];
     },
     AddProducte: async (_, { name, storeId, description, category, price, variants, image }) => {
       // Generate a new product ID
