@@ -76,7 +76,7 @@ query GetProductsByStoreId(\$storeId:  String!, \$offset: Int!, \$limit: Int!) {
     }
   }
 }
- UpdateProduct(\$product: ProductInput!) {
+ Mutation updateProduct(\$product: ProductInput!) {
       updateProduct(product: \$product) {
         id
         name
