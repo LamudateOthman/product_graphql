@@ -1,4 +1,4 @@
-import { ApolloServer, gql } from 'apollo-server';
+import { ApolloServer, gql ,InMemoryLRUCache  } from 'apollo-server';
 
  
 // Schema definition
@@ -323,12 +323,11 @@ const resolvers = {
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    // Ensure you have a cache strategy to prevent memory exhaustion
-    cache: 'bounded', // Use a bounded cache
-    persistedQueries: {
-        cache: new MyBoundedCacheImplementation(), // Replace with your cache implementation
-    },
-    // Other configurations...
+    cache: new InMemoryLRUCache({
+        maxSize: 10000000, // Adjust the size according to your app's needs
+        ttl: 60000, // Cache entry TTL in milliseconds
+    }),
+    // other configurations
 });
 
 
