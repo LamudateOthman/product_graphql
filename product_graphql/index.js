@@ -95,6 +95,7 @@ input AddProductInput {
   variants: [VariantInput!]!
 }
 input ProductInput {
+  id: ID!
   name: String!
   description: String!
   category: String!
