@@ -37,8 +37,7 @@ type Category {
 type Variant {
   id: ID!
   name: String!
-  description: String!
-  value: String!
+  price: Float!
   values: [VariantValue!]!
 }
 query fetchProducts($offset: Int, $limit: Int) {
@@ -63,15 +62,11 @@ query GetProductsByStoreId(\$storeId:  String!, \$offset: Int!, \$limit: Int!) {
     variants {
       id
       name
-      description
-      value
+      price
       values {
         id
-        value
-        price
-        name
-        stock
-        image
+        keysValues
+        values
       }
     }
   }
@@ -80,11 +75,9 @@ query GetProductsByStoreId(\$storeId:  String!, \$offset: Int!, \$limit: Int!) {
     
 type VariantValue {
   id: ID!
-  value: String!
-  price: Float!
-  name: String!
-  stock: Int!
-  image: String!
+  keysValues: String!
+  values: String!
+  
 }
 
 input AddProductInput {
@@ -108,18 +101,15 @@ input ProductInput {
 input VariantInput {
    id: ID
   name: String!
-  description: String!
-  value: String!
+  price: Float!
   values: [VariantValueInput!]!
 }
 
 input VariantValueInput {
   id: ID!
-  value: String!
-  price: Float!
-  name: String!
-  stock: Int!
-  image: String!
+  keysValues: String!
+  values: String!
+ 
 }
 `;
 
@@ -175,32 +165,26 @@ function generateMockVariants(productId) {
     const variant = {
       id: i,
       name: `Variant ${i} of Product ${productId}`,
-      description: `This is Variant ${i}`,
-      value: `Value ${i}`,
+      price: Math.floor(Math.random() * 100) + 1,
+   
       values: [
         {
           id: i*Math.floor(Math.random() * 100),
-          value: i,
-          stock: Math.floor(Math.random() * 100) + 1, // Random stock quantity
-          name: `Sub-variant ${i}-1`,
-          price: Math.floor(Math.random() * 100) + 1, // Random price
-          image: images[Math.floor(Math.random() * 10)],
+          keysValues:`variant ${i}` ,
+         values:`variant ${i} value`,
+           
         },
         {
-          id:  i*Math.floor(Math.random() * 100),
-          value: i,
-          stock: Math.floor(Math.random() * 100) + 1, // Random stock quantity
-          name: `Sub-variant ${i}-1`,
-          price: Math.floor(Math.random() * 100) + 1, // Random price
-          image: images[Math.floor(Math.random() * 10)],
+          id: i*Math.floor(Math.random() * 100),
+          keysValues:`variant ${i}` ,
+         values:`variant ${i} value`,
+           
         },
-        {
-          id:  i*Math.floor(Math.random() * 100),
-          value: i,
-          stock: Math.floor(Math.random() * 100) + 1, // Random stock quantity
-          name: `Sub-variant ${i}-1`,
-          price: Math.floor(Math.random() * 100) + 1, // Random price
-          image: images[Math.floor(Math.random() * 10)],
+       {
+          id: i*Math.floor(Math.random() * 100),
+          keysValues:`variant ${i}` ,
+         values:`variant ${i} value`,
+           
         },
       ],
     };
@@ -312,17 +296,15 @@ const resolvers = {
           return {
             id: variantId,
             name: variant.name,
-            description: variant.description,
-            value: variant.value,
+            price: variant.price,
+           
             values: variant.values.map((value) => {
               const valueId = variantId + '-' + (valueIdCounter++).toString();
               return {
                 id: valueId,
-                value: value.value,
-                stock: value.stock,
-                name: value.name,
-                price: value.price,
-                image: value.image,
+                values: value.values,
+                keysValues: value.keysValues,
+             
               };
             }),
           };
