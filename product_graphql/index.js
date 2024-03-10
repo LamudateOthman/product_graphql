@@ -104,7 +104,7 @@ input VariantInput {
   id: ID!
   name: String!
   price: Float!
-  Image: String!
+  image: String!
   values: [VariantValueInput!]!
 }
 
