@@ -5,7 +5,7 @@ const typeDefs = gql`
 type Query {
   getProduct(id: ID!): Product
   products(limit: Int, offset: Int): [Product!]!
-  getCategories: [Category]
+  getCategories: [Category]!
   getProductsByStoreId(storeId: String!, offset: Int = 0, limit: Int!): [Product!]!
 }
 
@@ -29,9 +29,9 @@ type Product {
 }
 
 type Category {
-  id: ID!
   name: String!
-  subcategories: [Category!]!
+  icon: String
+  color: String
 }
 
 type Variant {
@@ -199,36 +199,6 @@ function generateMockVariants(productId) {
 const products = generateMockProducts(10); 
 
 
-const categories = [
-  {
-    id: "1",
-    name: "Electronics",
-    subcategories: [
-      { id: "1-1", name: "Smartphones" },
-      { id: "1-2", name: "Laptops" },
-      { id: "1-3", name: "Tablets" }
-    ]
-  },
-  {
-    id: "2",
-    name: "Clothing",
-    subcategories: [
-      { id: "2-1", name: "Men's Wear" },
-      { id: "2-2", name: "Women's Wear" },
-      { id: "2-3", name: "Children's Wear" }
-    ]
-  },
-  {
-    id: "3",
-    name: "Home & Kitchen",
-    subcategories: [
-      { id: "3-1", name: "Furniture" },
-      { id: "3-2", name: "Cookware" },
-      { id: "3-3", name: "Decor" }
-    ]
-  }
-  // Add more categories and subcategories as needed
-];
 
 // Resolvers
 const resolvers = {
