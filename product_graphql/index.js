@@ -38,6 +38,7 @@ type Variant {
   id: ID!
   name: String!
   price: Float!
+  image: String!
   values: [VariantValue!]!
 }
 query fetchProducts($offset: Int, $limit: Int) {
@@ -62,6 +63,7 @@ query GetProductsByStoreId(\$storeId:  String!, \$offset: Int!, \$limit: Int!) {
     variants {
       id
       name
+      image
       price
       values {
         id
@@ -102,7 +104,7 @@ input VariantInput {
   id: ID!
   name: String!
   price: Float!
-  Image: String!
+  image: String!
   values: [VariantValueInput!]!
 }
 
@@ -268,7 +270,7 @@ const resolvers = {
             id: variantId,
             name: variant.name,
             price: variant.price,
-           
+            image: variant.image,
             values: variant.values.map((value) => {
               const valueId = variantId + '-' + (valueIdCounter++).toString();
               return {
