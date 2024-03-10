@@ -99,7 +99,7 @@ input ProductInput {
 }
 
 input VariantInput {
-   id: ID
+  id: ID!
   name: String!
   price: Float!
   values: [VariantValueInput!]!
