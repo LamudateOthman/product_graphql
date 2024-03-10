@@ -132,7 +132,7 @@ function generateMockProducts(numberOfProducts) {
     const product = {
       id: i ,
       name: `Product ${i}`,
-      storeId:  `${1007}`+"",
+      storeId:  `${1007}`,
       description: `Description for Product ${i}`,
       category: `Category ${(i % 5) + 1}`, // Let's assume there are 5 categories
       price: Math.floor(Math.random() * 100) + 1, // Random price between 1 and 100
