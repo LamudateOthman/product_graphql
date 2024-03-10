@@ -38,6 +38,7 @@ type Variant {
   id: ID!
   name: String!
   price: Float!
+  image: String!
   values: [VariantValue!]!
 }
 query fetchProducts($offset: Int, $limit: Int) {
@@ -62,6 +63,7 @@ query GetProductsByStoreId(\$storeId:  String!, \$offset: Int!, \$limit: Int!) {
     variants {
       id
       name
+      image
       price
       values {
         id
