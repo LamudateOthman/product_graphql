@@ -300,7 +300,7 @@ const resolvers = {
             id: variantId,
             name: variant.name,
             price: variant.price,
-           
+            image: variant.image,
             values: variant.values.map((value) => {
               const valueId = variantId + '-' + (valueIdCounter++).toString();
               return {
