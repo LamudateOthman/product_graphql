@@ -102,6 +102,7 @@ input VariantInput {
   id: ID!
   name: String!
   price: Float!
+  Image: String!
   values: [VariantValueInput!]!
 }
 
@@ -166,7 +167,7 @@ function generateMockVariants(productId) {
       id: i,
       name: `Variant ${i} of Product ${productId}`,
       price: Math.floor(Math.random() * 100) + 1,
-   
+      image: images[Math.floor(Math.random() * 10)],
       values: [
         {
           id: i*Math.floor(Math.random() * 100),
