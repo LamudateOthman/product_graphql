@@ -7,7 +7,7 @@ type Query {
   products(limit: Int, offset: Int): [Product!]!
   getCategories: [Category]!
   getProductsByStoreId(storeId: String!, offset: Int = 0, limit: Int!): [Product!]!
-
+  stores(limit: Int, offset: Int): [Store!]!
 }
 
 type Mutation {
@@ -115,6 +115,52 @@ input VariantValueInput {
   values: String!
  
 }
+
+
+type Store {
+  id: Int!
+  title: String!
+  author: String!
+  city: String!
+  description: String!
+  logo: String!
+  image: [String]!
+  categories: [String]!
+  numberOfProducts: Int!
+  hasOffer: Boolean!
+  numberOfKilometres: Float!
+}
+
+
+input StoreInput {
+  title: String!
+  author: String!
+  city: String!
+  description: String!
+  logo: String!
+  image: [String]!
+  categories: [String]!
+  numberOfProducts: Int!
+  hasOffer: Boolean!
+  numberOfKilometres: Float!
+}
+
+query FetchStores($offset: Int, $limit: Int) {
+  stores(offset: $offset, limit: $limit) {
+    id
+    title
+    author
+    city
+    description
+    logo
+    image
+    categories
+    numberOfProducts
+    hasOffer
+    numberOfKilometres
+  }
+}
+
 `;
 
 function generateMockProducts(numberOfProducts) {
@@ -239,7 +285,19 @@ const categories =[
   }
 ]
 ;
-
+const stores = Array.from({ length: 100 }, (_, i) => ({
+  id: i + 1,
+  title: `Store ${i + 1}`,
+  author: `Author ${Math.floor(Math.random() * 100) + 1}`,
+  city: `City ${Math.floor(Math.random() * 100) + 1}`,
+  description: `This is store ${i + 1} description.`,
+  logo: `https://images.pexels.com/photos/12428121/pexels-photo-12428121.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`,
+  image:[ `https://images.pexels.com/photos/12428121/pexels-photo-12428121.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`],
+  categories: ["Electronics", "Books"], // Example categories
+  numberOfProducts: Math.floor(Math.random() * 100) + 1,
+  hasOffer: Math.random() < 0.5,
+  numberOfKilometres: parseFloat((Math.random() * 10).toFixed(2)),
+}));
 // Resolvers
 const resolvers = {
   Query: {
@@ -249,7 +307,7 @@ const resolvers = {
       return slicedProducts;
     },
 
-
+    
     getProductsByStoreId: (_, { storeId, offset, limit }) => {
       // Example: Fetching products from an in-memory array. Adjust this to your data fetching logic.
       const filteredProducts = products.filter(product => product.storeId === storeId);
@@ -259,7 +317,10 @@ const resolvers = {
     },
     
 
-
+    stores: (_, { limit = 10, offset = 0 }) => {
+      const slicedStores = stores.slice(offset, offset + limit);
+      return slicedStores;
+    },
     getCategories: () => categories,
   },
  
