@@ -46,7 +46,7 @@ query fetchProducts($offset: Int, $limit: Int) {
     id 
     storeId
     name 
-    description 
+    description
     category 
     subcategories 
     price 
