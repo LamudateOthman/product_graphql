@@ -8,6 +8,7 @@ type Query {
   getCategories: [Category]!
   getProductsByStoreId(storeId: String!, offset: Int = 0, limit: Int!): [Product!]!
   stores(limit: Int, offset: Int): [Store!]!
+  storesF(where: StoreWhereInput): [Store]
 }
 
 type Mutation {
@@ -320,6 +321,9 @@ const resolvers = {
     stores: (_, { limit = 10, offset = 0 }) => {
       const slicedStores = stores.slice(offset, offset + limit);
       return slicedStores;
+    },
+    storesF: (_, { where }) => {
+      return stores.filter(store => (!where.numberOfKilometres || store.numberOfKilometres < where.numberOfKilometres.lt));
     },
     getCategories: () => categories,
   },
