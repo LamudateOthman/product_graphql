@@ -256,37 +256,37 @@ const products = generateMockProducts(10);
 
 const categories =[
   {
-    "name": "Books",
+    "name": "الكتب",
     "icon": "bookOpen",
     "color": "FFDBB2D1" // A soft pink
   },
   {
-    "name": "Music",
+    "name": "موسيقى",
     "icon": "music",
     "color": "FF90CAF9" // Light blue
   },
   {
-    "name": "Travel",
+    "name": "سفر",
     "icon": "train",
     "color": "FFFFAB91" // Light orange
   },
   {
-    "name": "Fitness",
+    "name": "اللياقه البدنيه",
     "icon": "toolbox",
     "color": "FFA5D6A7" // Light green
   },
   {
-    "name": "Technology",
+    "name": "التقنية",
     "icon": "laptop",
     "color": "FFCE93D8" // Light purple
   },
   {
-    "name": "Box",
+    "name": "مربع",
     "icon": "box",
     "color": "FFFFE082" // Yellow
   },
   {
-    "name": "Drinks",
+    "name": "المشروبات",
     "icon": "bottleWater",
     "color": "FFEF9A9A" // Soft red
   }
