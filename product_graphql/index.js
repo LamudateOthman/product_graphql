@@ -7,6 +7,7 @@ type Query {
   products(limit: Int, offset: Int): [Product!]!
   getCategories: [Category]!
   getProductsByStoreId(storeId: String!, offset: Int = 0, limit: Int!): [Product!]!
+  getCategories: [Category]!
 }
 
 type Mutation {
@@ -200,7 +201,44 @@ function generateMockVariants(productId) {
 // Example usage
 const products = generateMockProducts(10); 
 
-
+const categories =[
+  {
+    "name": "Books",
+    "icon": "bookOpen",
+    "color": "FFDBB2D1" // A soft pink
+  },
+  {
+    "name": "Music",
+    "icon": "music",
+    "color": "FF90CAF9" // Light blue
+  },
+  {
+    "name": "Travel",
+    "icon": "train",
+    "color": "FFFFAB91" // Light orange
+  },
+  {
+    "name": "Fitness",
+    "icon": "toolbox",
+    "color": "FFA5D6A7" // Light green
+  },
+  {
+    "name": "Technology",
+    "icon": "laptop",
+    "color": "FFCE93D8" // Light purple
+  },
+  {
+    "name": "Box",
+    "icon": "box",
+    "color": "FFFFE082" // Yellow
+  },
+  {
+    "name": "Drinks",
+    "icon": "bottleWater",
+    "color": "FFEF9A9A" // Soft red
+  }
+]
+;
 
 // Resolvers
 const resolvers = {
