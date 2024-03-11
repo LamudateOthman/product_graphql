@@ -7,7 +7,7 @@ type Query {
   products(limit: Int, offset: Int): [Product!]!
   getCategories: [Category]!
   getProductsByStoreId(storeId: String!, offset: Int = 0, limit: Int!): [Product!]!
-  getCategories: [Category]!
+
 }
 
 type Mutation {
