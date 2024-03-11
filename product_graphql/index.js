@@ -161,7 +161,13 @@ query FetchStores($offset: Int, $limit: Int) {
     numberOfKilometres
   }
 }
+input StoreWhereInput {
+  numberOfKilometres: FloatFilter
+}
 
+input FloatFilter {
+  lt: Float
+}
 `;
 
 function generateMockProducts(numberOfProducts) {
