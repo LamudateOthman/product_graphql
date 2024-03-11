@@ -224,12 +224,7 @@ const resolvers = {
 
     getCategories: () => categories,
   },
-  Category: {
-    subcategories: (parent) => parent.subcategories.map(subcategory => ({
-      ...subcategory,
-      subcategories: []
-    })),
-  },
+ 
   Mutation: {
     addProduct: (_, { input }) => {
       const newProduct = { id: Date.now().toString(), ...input, variants: input.variants };
