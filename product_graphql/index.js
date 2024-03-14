@@ -34,6 +34,7 @@ type Category {
   name: String!
   icon: String
   color: String
+  subcategories:[String!]!
 }
 
 type Variant {
@@ -255,44 +256,51 @@ function generateMockVariants(productId) {
 // Example usage
 const products = generateMockProducts(10); 
 
-const categories =[
+const categories = [
   {
     "name": "الكتب",
     "icon": "bookOpen",
-    "color": "FFDBB2D1" // A soft pink
+    "color": "FFDBB2D1", // A soft pink
+    "subcategories": ["روايات", "علم", "تاريخ", "أدب"]
   },
   {
     "name": "موسيقى",
     "icon": "music",
-    "color": "FF90CAF9" // Light blue
+    "color": "FF90CAF9", // Light blue
+    "subcategories": ["كلاسيكية", "روك", "جاز", "بوب"]
   },
   {
     "name": "سفر",
     "icon": "train",
-    "color": "FFFFAB91" // Light orange
+    "color": "FFFFAB91", // Light orange
+    "subcategories": ["مغامرة", "استجمام", "ثقافي", "استكشاف"]
   },
   {
     "name": "اللياقه البدنيه",
     "icon": "toolbox",
-    "color": "FFA5D6A7" // Light green
+    "color": "FFA5D6A7", // Light green
+    "subcategories": ["رياضة", "يوغا", "تمارين قوة", "تمارين تحمل"]
   },
   {
     "name": "التقنية",
     "icon": "laptop",
-    "color": "FFCE93D8" // Light purple
+    "color": "FFCE93D8", // Light purple
+    "subcategories": ["أجهزة", "برمجيات", "التعلم الآلي", "الأمان السيبراني"]
   },
   {
     "name": "مربع",
     "icon": "box",
-    "color": "FFFFE082" // Yellow
+    "color": "FFFFE082", // Yellow
+    "subcategories": ["تخزين", "تعبئة", "تنظيم", "ديكور"]
   },
   {
     "name": "المشروبات",
     "icon": "bottleWater",
-    "color": "FFEF9A9A" // Soft red
+    "color": "FFEF9A9A", // Soft red
+    "subcategories": ["ماء", "عصير", "مشروبات غازية", "شاي وقهوة"]
   }
-]
-;
+];
+
 const stores = Array.from({ length: 100 }, (_, i) => ({
   id: i + 1,
   title: `Store ${i + 1}`,
