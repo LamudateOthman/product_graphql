@@ -94,6 +94,7 @@ input AddProductInput {
 }
 input ProductInput {
   id: ID!
+  storeId: String!
   name: String!
   description: String!
   category: String!
@@ -341,7 +342,7 @@ const resolvers = {
       return newProduct;
     },
   updateProduct: (_, { product }) => {
-        const productIndex = products.findIndex(p => p.id === product.id);
+        const productIndex = products.findIndex(p => p.id == product.id);
         if (productIndex === -1) {
             throw new Error('Product not found');
         }
