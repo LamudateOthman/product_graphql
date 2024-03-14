@@ -12,7 +12,7 @@ type Query {
 }
 
 type Mutation {
-  
+  deleteProduct(id: ID!): DeleteProductPayload
   addProduct(input: ProductInput!): Product
   AddProducte(name: String!,storeId: String!,description: String!, category: String!,subcategories:[String]!, price: Float!,image:String, variants: [VariantInput!]!): Product
   updateProduct(product: ProductInput!): Product
@@ -29,7 +29,10 @@ type Product {
   variants: [Variant!]!
   image: String
 }
-
+type DeleteProductPayload {
+  id: ID!
+  success: Boolean!
+}
 type Category {
   name: String!
   icon: String
@@ -255,7 +258,7 @@ function generateMockVariants(productId) {
 }
 
 // Example usage
-const products = generateMockProducts(10); 
+var products = generateMockProducts(10); 
 
 const categories = [
   {
@@ -349,6 +352,17 @@ const resolvers = {
       const newProduct = { id: Date.now().toString(), ...input, variants: input.variants };
       products.push(newProduct);
       return newProduct;
+    },
+    deleteProduct: async (_, { id }) => {
+      try {
+       
+       products= products.filter(product => product.id != id);
+        
+        return { id, success: true };
+      } catch (error) {
+        console.error(error);
+        return { id, success: false };
+      }
     },
   updateProduct: (_, { product }) => {
         const productIndex = products.findIndex(p => p.id == product.id);
