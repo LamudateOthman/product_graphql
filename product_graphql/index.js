@@ -14,7 +14,7 @@ type Query {
 type Mutation {
   
   addProduct(input: ProductInput!): Product
-  AddProducte(name: String!,storeId: String!,description: String!, category: String!, price: Float!,image:String, variants: [VariantInput!]!): Product
+  AddProducte(name: String!,storeId: String!,description: String!, category: String!,subcategories:[String]!, price: Float!,image:String, variants: [VariantInput!]!): Product
   updateProduct(product: ProductInput!): Product
 }
 
@@ -24,7 +24,7 @@ type Product {
   name: String!
   description: String!
   category: String!
-  subcategories: String!
+  subcategories: [String]!
   price: Float!
   variants: [Variant!]!
   image: String
@@ -194,6 +194,7 @@ function generateMockProducts(numberOfProducts) {
       storeId:  `${1007}`,
       description: `Description for Product ${i}`,
       category: `Category ${(i % 5) + 1}`, // Let's assume there are 5 categories
+      subcategories: `Category ${(i % 5) + 1}`,
       price: Math.floor(Math.random() * 100) + 1, // Random price between 1 and 100
       image: images[Math.floor(Math.random() * 10)],
       variants: generateMockVariants(i), // Generate variants for each product
@@ -359,7 +360,7 @@ const resolvers = {
         products[productIndex] = { ...products[productIndex], ...product };
         return products[productIndex];
     },
-    AddProducte: async (_, { name, storeId, description, category, price, variants, image }) => {
+    AddProducte: async (_, { name, storeId, description, category,subcategories, price, variants, image }) => {
       // Generate a new product ID
       const newProductId = products.reduce((maxId, product) => Math.max(maxId, parseInt(product.id)), 0) + 1;
     
@@ -374,6 +375,7 @@ const resolvers = {
         storeId,
         description,
         category,
+        subcategories,
         price,
         image,
         variants: variants.map((variant) => {
