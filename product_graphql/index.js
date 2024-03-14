@@ -15,7 +15,7 @@ type Mutation {
   deleteProduct(id: ID!): DeleteProductPayload
   addProduct(input: ProductInput!): Product
   AddProducte(name: String!,storeId: String!,description: String!, category: String!,subcategories:[String]!, price: Float!,image:String, variants: [VariantInput!]!): Product
-  updateProduct(product: ProductInput!): Product
+  updateProduct(id:String!,name: String!,storeId: String!,description: String!, category: String!,subcategories:[String]!, price: Float!,image:String, variants: [VariantInput!]!): Product
 }
 
 type Product {
@@ -364,16 +364,42 @@ const resolvers = {
         return { id, success: false };
       }
     },
-  updateProduct: (_, { product }) => {
-        const productIndex = products.findIndex(p => p.id == product.id);
-        if (productIndex === -1) {
-            throw new Error('Product not found');
-        }
+updateProduct: (_, { id, name, storeId, description, category, subcategories, price, image, variants }) => {
+  const productIndex = products.findIndex(p => p.id == id);
+  if (productIndex === -1) {
+    throw new Error('Product not found');
+  }
+  
+  // Updating the product details
+  const updatedProduct = {
+    ...products[productIndex],
+    name,
+    storeId,
+    description,
+    category,
+    subcategories,
+    price,
+    image,
+    variants: variants.map(variant => ({
+      id: variant.id,
+      name: variant.name,
+      price: variant.price,
+      image: variant.image,
+      values: variant.values.map(value => ({
+        id: value.id,
+        keysValues: value.keysValues,
+        values: value.values,
+      })),
+    })),
+  };
+  
+  // Replace the old product with the updated one
+  products[productIndex] = updatedProduct;
+  
+  // Return the updated product
+  return updatedProduct;
+},
 
-        // Merge the existing product info with the updated info
-        products[productIndex] = { ...products[productIndex], ...product };
-        return products[productIndex];
-    },
     AddProducte: async (_, { name, storeId, description, category,subcategories, price, variants, image }) => {
       // Generate a new product ID
       const newProductId = products.reduce((maxId, product) => Math.max(maxId, parseInt(product.id)), 0) + 1;
